@@ -1,22 +1,21 @@
 import React from "react";
 import "./styles/index.css";
 
-export const Album = () => {
-  const [sheets, setSheets] = React.useState([]);
+export const Album = ({album,open}) => {
+  const [section, setSection] = React.useState("films");
   return(
-    <div className="album">
+    <div className={`album ${open && "open"}`}>
         <h4 className="album-title">Collectibles</h4>
         <div className="album-nav">
-            <button>Films</button>
-            <button>Starships</button>
-            <button>Characters</button>
+            <button onClick={()=>setSection("films")}>Films</button>
+            <button onClick={()=>setSection("starships")}>Starships</button>
+            <button onClick={()=>setSection("characters")}>Characters</button>
         </div>
         <div className="album-items">
-            {sheets.map((sheet) => (
-            <div key={sheet.id}>
-                <h2>{sheet.title}</h2>
-                <p>{sheet.description}</p>
-            </div>
+            {album[section].map((item, index) => (
+              <div key={index}>
+                {item.name}
+              </div>
             ))}
         </div>
     </div> 

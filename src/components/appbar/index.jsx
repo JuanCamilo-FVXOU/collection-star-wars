@@ -1,10 +1,11 @@
 import "./styles/index.css";
 
-export const AppBar = () => {
+export const AppBar = ({albumopen}) => {
   return (
     <header>
         <h1>Collection Star Wars</h1>
-        <button>Album</button>
+        <button>Obtener Láminas</button>
+        <button onClick={albumopen}>Mi álbum</button>
     </header>
   )
 }
