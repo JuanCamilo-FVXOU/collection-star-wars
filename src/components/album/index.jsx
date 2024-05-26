@@ -1,6 +1,7 @@
 import React from "react";
 import { Sheet } from "../sheet";
 import "./styles/index.css";
+import bannerimg from "../../assets/bannercollection.webp";
 import { getFilmsStarWars, getStarShipsStarWars, getCharactersStarWars } from "../../services";
 
 export const Album = ({ album, open }) => {
@@ -8,7 +9,6 @@ export const Album = ({ album, open }) => {
   const [data, setData] = React.useState([]);
   const arrayghost = new Array(data.count).fill(null);
   React.useEffect(() => {
-    console.log(data.count);
     const fetchData = async () => {
       let result;
       switch (section) {
@@ -33,11 +33,11 @@ export const Album = ({ album, open }) => {
   }, [section]);
   return (
     <div className={`album ${open && "open"}`}>
-      <h4 className="album-title">Coleccionables</h4>
+      <img src={bannerimg} alt="img-banner" />
       <div className="album-nav">
-        <button onClick={() => setSection("films")}>Films</button>
-        <button onClick={() => setSection("starships")}>Starships</button>
-        <button onClick={() => setSection("characters")}>Characters</button>
+        <button onClick={() => setSection("films")} className={`btn-nav ${section === "films" && "active-section"}`}>Films</button>
+        <button onClick={() => setSection("starships")}className={`btn-nav ${section === "starships" && "active-section"}`}>Starships</button>
+        <button onClick={() => setSection("characters")}className={`btn-nav ${section === "characters" && "active-section"}`}>Characters</button>
       </div>
       <div className="album-items">
         {arrayghost.map((_, index) => (

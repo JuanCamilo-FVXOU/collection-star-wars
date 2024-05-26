@@ -13,12 +13,17 @@
   height: 100%;
 }
 .content {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 2rem;
-  padding: 5rem 0;
-  display: flex;
   width: 100%;
+  & .content-decks{
+    flex-wrap: wrap;
+    display: flex;
+    gap: 2rem;
+    padding: 5rem 0;
+  }
 }
 
 @keyframes logo-spin {

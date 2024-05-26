@@ -13,3 +13,21 @@ export const getCharactersStarWars = async () => {
     const data = await response.json();
     return data;
 }
+
+export const getStarShipsStarWarsById = async (id) =>   {
+    const response = await fetch(`https://swapi.dev/api/starships/${id}`);
+    const data = await response.json();
+    return data;
+}
+
+export const getCharactersStarWarsById = async (id) => {
+    const response = await fetch(`https://swapi.dev/api/people/${id}`);
+    const data = await response.json();
+    return data;
+}
+
+export const getFilmsStarWarsById = async (id) => {
+    const response = await fetch(`https://swapi.dev/api/films/${id}`);
+    const data = await response.json();
+    return data;
+}

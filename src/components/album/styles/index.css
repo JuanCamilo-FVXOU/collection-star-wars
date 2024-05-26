@@ -1,14 +1,19 @@
 .album {
   display: flex;
+  align-items: center;
   flex-direction: column;
-  background-color: #3b3535;
+  background-color: #000;
   width: 0px;
   height: 100%;
   transition: width 0.5s ease-in-out;
   overflow: hidden;
-}
-.open {
-  width: 700px;
+  img {
+    width: 300px;
+    height: 200px;
+  }
+  &.open {
+    width: 700px;
+  }
 }
 .album-title {
   display: flex;
@@ -16,19 +21,41 @@
 }
 
 .album-nav {
-  padding: 0 4rem;
+  box-sizing: border-box;
+  background-color: #000;
+  padding: 0 1rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  transition: background-color 0.5s ease-in-out;
+  & button.btn-nav {
+    border:none;
+    border-radius: 0;
+    background-color: transparent;
+    width: 100%;
+    &:hover {
+      background-color: #2b2a2a;
+      border-radius: none;
+    }
+    &:focus, &:focus-visible {
+      outline: none;
+    }
+    &.active-section {
+      background-color: #2b2a2a;
+      border: 1px solid #fff;
+    }
+  }
 }
 
 .album-items {
   overflow-y: auto;
   overflow-x: hidden;
   justify-content: center;
-  max-height: 600px;
+  max-height: 500px;
   display: grid;
+  width: 100%;
   gap: 1rem;
   grid-template-columns: repeat(4,100px);
   &::-webkit-scrollbar {
@@ -48,7 +75,7 @@
 .block-sheet {
   position: relative;
   border: 2px dashed #fff;
-  background-color: #3b36361e;
+  background-color: #464343;
   width: 100px;
   height: 150px;
   border-radius: .25rem;
