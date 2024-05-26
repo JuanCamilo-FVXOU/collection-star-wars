@@ -9,6 +9,7 @@ import {
   getStarShipsStarWarsById,
   getFilmsStarWarsById,
 } from "./services";
+import { TagTimer } from "./components/tag-timer";
 
 function App() {
   const album = {
@@ -16,10 +17,10 @@ function App() {
     starships: [],
     characters: [],
   };
+  const [initialtime,setInitialTime] = React.useState(0);
   const [openmodal, setOpenModal] = React.useState(false);
   const [decks, setDecksPack] = React.useState([]);
   const [openAlbum, setOpenAlbum] = React.useState(false);
-  const [timeLeft, setTimeLeft] = React.useState(60);
   const [timerActive, setTimerActive] = React.useState(false);
   const [tempdeck, setTempDeck] = React.useState([]);
   const ndeck = 4;
@@ -37,10 +38,10 @@ function App() {
   const handleCloseModal = () => {
     setOpenModal(false);
     setTempDeck([]);
-  }
+  };
   const handleOpenModal = () => {
     setOpenModal(true);
-  }
+  };
 
   const handleGetDesks = () => {
     const newDecks = [];
@@ -52,9 +53,8 @@ function App() {
   const handleOpenDeck = (deck) => {
     if (timerActive) return;
     handleOpenModal();
-    console.log(deck);
+    setInitialTime(10);
     setTimerActive(true);
-    setTimeLeft(60);
     deck.data.forEach(async (item) => {
       let data;
       let id;
@@ -62,17 +62,17 @@ function App() {
         case "films":
           id = Math.floor(Math.random() * 6) + 1;
           data = await getFilmsStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck, data]);
+          setTempDeck((prevDeck) => [...prevDeck, {id ,type:"films",data}]);
           break;
         case "people":
           id = Math.floor(Math.random() * 89) + 1;
           data = await getCharactersStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck, data]);
+          setTempDeck((prevDeck) => [...prevDeck, {id ,type:"characters",data}]);
           break;
         case "starships":
           id = Math.floor(Math.random() * 36) + 1;
           data = await getStarShipsStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck, data]);
+          setTempDeck((prevDeck) => [...prevDeck,{id ,type:"starships",data}]);
           break;
         default:
           break;
@@ -82,43 +82,34 @@ function App() {
     setDecksPack(newDecks);
   };
   React.useEffect(() => {
-    if (timerActive === true && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-
-      return () => clearInterval(timer);
-    } else if (timeLeft === 0) {
-      setTimerActive(false);
-    }
-  }, [timerActive, timeLeft]);
-  React.useEffect(() => {
     console.log("decks", decks);
     console.log("tempdeck", tempdeck);
   }, [decks, tempdeck]);
-
+  console.log("render app");
   return (
     <div className="app">
       <AppBar albumopen={handleToggleAlbum} getdecks={handleGetDesks} />
       <div className="collection">
         <div className="content">
-          <div className="content-timer">{timeLeft}</div>
+          <TagTimer active={timerActive} setActive={setTimerActive} initialtime={initialtime}/>
+          <h2>Mis Paquetes...</h2>
           <div className="content-decks">
-            {decks.map((sheets, i) => (
-              <Deck
-                key={i}
-                timer={timerActive}
-                opendeck={handleOpenDeck}
-                sheets={sheets}
-              />
-            ))}
+            {decks.length > 0 ? (
+              decks.map((sheets, i) => (
+                <Deck
+                  key={i}
+                  timer={timerActive}
+                  opendeck={handleOpenDeck}
+                  sheets={sheets}
+                />
+              ))
+            ) : (
+              <div>No tienes paquetes de laminas disponibles...</div>
+            )}
           </div>
           <div>
             {openmodal && (
-              <ModalShowSheets
-                sheets={tempdeck}
-                onClose={handleCloseModal}
-              />
+              <ModalShowSheets sheets={tempdeck} onClose={handleCloseModal} />
             )}
           </div>
         </div>

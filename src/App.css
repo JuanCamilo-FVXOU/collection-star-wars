@@ -1,8 +1,9 @@
 #root {
   width: 100%;
   height: 100%;
+  background-image: url("./assets/background.jpg");
 }
-.app{
+.app {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -16,13 +17,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
-  & .content-decks{
+  & .content-decks {
+    padding: 1rem 0;
+    backdrop-filter: blur(5px);
     flex-wrap: wrap;
     display: flex;
     gap: 2rem;
-    padding: 5rem 0;
+    height: 100%;
   }
 }
 
