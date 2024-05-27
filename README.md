@@ -2,12 +2,12 @@
 
 ## languages ​​and frameworks
 
-### React
-### JavaScript
-### CSS
+#### + React
+#### + JavaScript
+#### + CSS
 
 ## Structure Project
-
+```
 └── 📁src
     └── App.css
     └── App.jsx
@@ -56,8 +56,8 @@
     └── 📁services
         └── api-star-wars.js
         └── index.js
-
+```
 
 ## Autor
 
-### Aiode || JCGP
+#### + Aiode || JCGP
