@@ -2,6 +2,7 @@
   "name": "collection-star-wars",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://juancamilo-fvxou.github.io/collection-star-wars/build",
   "type": "module",
   "scripts": {
     "dev": "vite",
