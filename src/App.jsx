@@ -44,9 +44,11 @@ function App() {
   };
   const handleSaveSheets = (sheets) => {
     const updatedAlbum = { ...album };
-    sheets.forEach(item => {
+    sheets.forEach((item) => {
       if (album[item.type]) {
-        const alreadyExists = updatedAlbum[item.type].some(existingItem => existingItem.id === item.id);
+        const alreadyExists = updatedAlbum[item.type].some(
+          (existingItem) => existingItem.id === item.id
+        );
         if (!alreadyExists) {
           updatedAlbum[item.type].push(item);
         }
@@ -64,7 +66,7 @@ function App() {
   const handleOpenDeck = (deck) => {
     if (timerActive) return;
     handleOpenModal();
-    setTime(10);
+    setTime(60);
     setTimerActive(true);
     deck.data.forEach(async (item) => {
       let data;
@@ -98,12 +100,7 @@ function App() {
     const newDecks = decks.filter((d) => d.id !== deck.id);
     setDecksPack(newDecks);
   };
-  React.useEffect(() => {
-    console.log("decks", decks);
-    console.log("tempdeck", tempdeck);
-    console.log("album", album);
-  }, [decks, tempdeck, album]);
-  console.log("render app");
+  React.useEffect(() => {}, [decks, tempdeck, album]);
   return (
     <div className="app">
       <AppBar albumopen={handleToggleAlbum} getdecks={handleGetDesks} />
