@@ -12,12 +12,12 @@ import {
 import { TagTimer } from "./components/tag-timer";
 
 function App() {
-  const album = {
+  const [album, setAlbum] = React.useState({
     films: [],
     starships: [],
     characters: [],
-  };
-  const [initialtime,setInitialTime] = React.useState(0);
+  });
+  const [time, setTime] = React.useState(0);
   const [openmodal, setOpenModal] = React.useState(false);
   const [decks, setDecksPack] = React.useState([]);
   const [openAlbum, setOpenAlbum] = React.useState(false);
@@ -42,7 +42,18 @@ function App() {
   const handleOpenModal = () => {
     setOpenModal(true);
   };
-
+  const handleSaveSheets = (sheets) => {
+    const updatedAlbum = { ...album };
+    sheets.forEach(item => {
+      if (album[item.type]) {
+        const alreadyExists = updatedAlbum[item.type].some(existingItem => existingItem.id === item.id);
+        if (!alreadyExists) {
+          updatedAlbum[item.type].push(item);
+        }
+      }
+    });
+    setAlbum(updatedAlbum);
+  };
   const handleGetDesks = () => {
     const newDecks = [];
     for (let i = 0; i < ndeck; i++) {
@@ -53,7 +64,7 @@ function App() {
   const handleOpenDeck = (deck) => {
     if (timerActive) return;
     handleOpenModal();
-    setInitialTime(10);
+    setTime(10);
     setTimerActive(true);
     deck.data.forEach(async (item) => {
       let data;
@@ -62,17 +73,23 @@ function App() {
         case "films":
           id = Math.floor(Math.random() * 6) + 1;
           data = await getFilmsStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck, {id ,type:"films",data}]);
+          setTempDeck((prevDeck) => [...prevDeck, { id, type: "films", data }]);
           break;
         case "people":
           id = Math.floor(Math.random() * 89) + 1;
           data = await getCharactersStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck, {id ,type:"characters",data}]);
+          setTempDeck((prevDeck) => [
+            ...prevDeck,
+            { id, type: "characters", data },
+          ]);
           break;
         case "starships":
           id = Math.floor(Math.random() * 36) + 1;
           data = await getStarShipsStarWarsById(id);
-          setTempDeck((prevDeck) => [...prevDeck,{id ,type:"starships",data}]);
+          setTempDeck((prevDeck) => [
+            ...prevDeck,
+            { id, type: "starships", data },
+          ]);
           break;
         default:
           break;
@@ -84,14 +101,20 @@ function App() {
   React.useEffect(() => {
     console.log("decks", decks);
     console.log("tempdeck", tempdeck);
-  }, [decks, tempdeck]);
+    console.log("album", album);
+  }, [decks, tempdeck, album]);
   console.log("render app");
   return (
     <div className="app">
       <AppBar albumopen={handleToggleAlbum} getdecks={handleGetDesks} />
       <div className="collection">
         <div className="content">
-          <TagTimer active={timerActive} setActive={setTimerActive} initialtime={initialtime}/>
+          <TagTimer
+            active={timerActive}
+            setActive={setTimerActive}
+            setTime={setTime}
+            time={time}
+          />
           <h2>Mis Paquetes...</h2>
           <div className="content-decks">
             {decks.length > 0 ? (
@@ -109,7 +132,11 @@ function App() {
           </div>
           <div>
             {openmodal && (
-              <ModalShowSheets sheets={tempdeck} onClose={handleCloseModal} />
+              <ModalShowSheets
+                sheets={tempdeck}
+                onClose={handleCloseModal}
+                saveSheet={handleSaveSheets}
+              />
             )}
           </div>
         </div>

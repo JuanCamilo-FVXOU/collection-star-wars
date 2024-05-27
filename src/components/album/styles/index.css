@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #000;
+  background: linear-gradient(90deg, #fde000 1%, #000000 1%);
   width: 0px;
   height: 100%;
   transition: width 0.5s ease-in-out;
@@ -22,7 +22,7 @@
 
 .album-nav {
   box-sizing: border-box;
-  background-color: #000;
+  background-color: transparent;
   padding: 0 1rem;
   width: 100%;
   display: flex;
@@ -31,7 +31,7 @@
   margin-bottom: 1rem;
   transition: background-color 0.5s ease-in-out;
   & button.btn-nav {
-    border:none;
+    border: none;
     border-radius: 0;
     background-color: transparent;
     width: 100%;
@@ -39,7 +39,8 @@
       background-color: #2b2a2a;
       border-radius: none;
     }
-    &:focus, &:focus-visible {
+    &:focus,
+    &:focus-visible {
       outline: none;
     }
     &.active-section {
@@ -57,7 +58,7 @@
   display: grid;
   width: 100%;
   gap: 1rem;
-  grid-template-columns: repeat(4,100px);
+  grid-template-columns: repeat(4, 100px);
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -78,7 +79,7 @@
   background-color: #464343;
   width: 100px;
   height: 150px;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   & .sheet-id {
     font-weight: bold;
     position: absolute;
@@ -92,7 +93,18 @@
     height: 30px;
     background-color: #00000076;
     color: #fff;
-    padding: .25rem;
+    padding: 0.25rem;
     border-radius: 50%;
+  }
+}
+
+@media only screen and (max-width: 1650px) {
+  .album-items {
+    grid-template-columns: repeat(3, 100px);
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .album-items {
+    grid-template-columns: repeat(2, 100px);
   }
 }
